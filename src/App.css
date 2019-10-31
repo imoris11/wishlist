@@ -1,22 +1,132 @@
-.App {
-  text-align: center;
+p {
+  font-size: 12px;
+}
+h3{
+  font-size: 24px;
+}
+body{
+  color:#707070;
+}
+a {
+  text-decoration: none;
+  color:#0092DD;
 }
 
-.App-logo {
-  height: 40vmin;
+input {
+  background-color: transparent;
+  border:0px;
+  font-size: 14px;
+  padding: 5px;
+  width: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
+input:focus {
+    outline: none !important;
+   
+}
+
+.row {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.col-sm-4{
+  flex: 4;
 }
 
-.App-link {
-  color: #09d3ac;
+.col-sm-8{
+  flex:8;
 }
+
+.col-sm-2 {
+  flex: 2;
+}
+
+.col-sm-10 {
+  flex:10;
+}
+.col-sm-3 {
+  flex: 3;
+}
+
+.col-sm-9 {
+  flex:9;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid lightgrey;
+  padding: 20px;
+  width: 25vw;
+}
+
+.hint {
+  color:#0092DD;
+}
+.divider {
+  height: 1px;
+  background-color: grey;
+}
+
+.form-group {
+  margin-top:25px;
+}
+.btn {
+  padding: 10px;
+  color:white;
+  font-size: 14px;
+  font-weight: 500;
+  border:0px;
+  width: auto;
+  margin-top: 10px;
+}
+.btn-primary {
+  background-color: #0092DD;
+}
+
+.btn-success {
+  background-color: #20AF6B;
+}
+.pull-right {
+  text-align: right;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  margin-left:10px;
+  font-size: 20px;
+}
+
+.btn-rounded {
+  border-radius: 5px;
+}
+
+.primary {
+  color:#0092DD;
+}
+
+
+@media only screen and (max-width: 600px){
+  .col-sm-8{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .form{
+      width: 50vw;
+  }
+}
+

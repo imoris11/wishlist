@@ -1,0 +1,38 @@
+.bg-image {
+    background-image: url('../../assets/images/login.jpg');
+    width: 100%;
+    height: 100%;
+    background-position: bottom;
+    background-size: cover;
+}
+.actions {
+    margin-top: 30px;
+}
+.photo-credits{
+    position: fixed;
+    left: 0%;
+    bottom: 0%;
+    font-size: 10px;
+    color: white;
+}
+@media only screen and (max-width: 600px){
+    .image-container{
+        display: none;
+    }
+    .form-container{
+        background-image: url('../../assets/images/login.jpg');
+        background-size: cover;
+    }
+    .form{
+        background-color: whitesmoke;
+    }
+    .wish{
+        color:white;
+    }
+    .photo-credits{
+        position: fixed;
+        bottom: 0%;
+        color: white;
+    }
+    
+  }
