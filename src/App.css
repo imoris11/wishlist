@@ -221,6 +221,19 @@ input:focus {
   overflow-y: scroll;
   height: 100vh;
 }
+.text-center {
+  text-align: center;
+}
+.text-danger {
+  color:#F52E5D;
+}
+.info {
+  font-size: 14px;
+  font-weight: 500;
+}
+.text-success{
+  color: #20AF6B;
+}
 @media only screen and (max-width: 600px){
   .col-sm-8{
       display: flex;

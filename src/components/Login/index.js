@@ -1,15 +1,48 @@
-import React, { useState} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect} from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import { FaGift } from 'react-icons/fa';
+import { auth } from '../../helpers/Firebase';
 import './Login.css';
 
 export const Login = (props) => {
-    const [ state, setState ] = useState({});
+    const [ state, setState ] = useState({ errorMessage:''});
+    const [loading, setLoading ] = useState(false);
     const handleChange = (e) => {
         let temp = {...state};
         temp[e.target.name] = e.target.value;
         setState(temp);
     }
+    const [loggedIn, setLoggedIn ] = useState(false);
+
+    useEffect(() => {
+      const subscribe = auth.onAuthStateChanged(user => {
+          if(user) {
+              setLoggedIn(true);
+          }else{
+              setLoggedIn(false);
+          }
+        })
+        return (()=> {
+            subscribe();
+        })
+    }, []);
+
+    const signin = () => {
+        auth.signInWithEmailAndPassword(state.email, state.password)
+        .catch(error => {
+            let temp = {...state};
+            temp['errorMessage'] = error.message;
+            setState(temp);
+            setLoading(false);
+        });
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setLoading(true);
+        signin();
+    }
+
     return (
         <div className="row">
 
@@ -21,7 +54,7 @@ export const Login = (props) => {
                <div className='row'>
                     <div className='form-control'>
                         <h3 className='wish'>Make a wish <FaGift className='primary icon' /> </h3>
-                            <form className='form'>
+                            <form onSubmit={handleSubmit} className='form'>
                                 <h3>Sign in</h3>
                                 <div className='form-group'>
                                     <input type="email" placeholder='Email' name="email" onChange={handleChange} />
@@ -35,17 +68,17 @@ export const Login = (props) => {
                                     <p>New? <b className="hint"><Link to='/signup'> Create an account </Link></b></p>
                                     <p>Forgot Password? <b  className="hint"> <Link to='/reset'> Reset </Link></b></p>
                                 </div>
+                                <p className='text-center text-danger error'>{state.errorMessage}</p>
                                 <div className='pull-right'>
-                                    <Link to='/home'>
-                                         <button className='btn btn-primary'>Sign in</button>
-                                    </Link>
-                                
+                                    {loading ? <p className='info'>Signing in...</p> : 
+                                    <button type='submit' className='btn btn-primary'>Sign in</button> }
                                 </div>
                             </form>
                     </div>
                </div>
            </div>
            <i className='photo-credits'>Photo by Element5 Digital on Unsplash</i>
+           {loggedIn && <Redirect to='/home' /> }
         </div>
     )
 }

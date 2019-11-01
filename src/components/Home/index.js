@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Wishlist } from './Wishlist';
 import { Activities } from './Activities';
 import './Home.css';
+import { auth } from '../../helpers/Firebase';
 
 export const Home = (props) => {
     const handleChange = (e) => {
 
     }
+    
     return (
         <div className='row'> 
             <div className='col-sm-9'>

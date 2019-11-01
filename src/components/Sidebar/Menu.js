@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import { FaGift } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import './Menu.css';
+import { auth } from '../../helpers/Firebase';
 
 export const Menu = (props) => {
+    const [loggedIn, setLoggedIn ] = useState(true);
+
+  useEffect(() => {
+    const subscribe = auth.onAuthStateChanged(user => {
+        if(user) {
+            setLoggedIn(true);
+        }else{
+            setLoggedIn(false);
+        }
+      })
+      return (()=> {
+          subscribe();
+      })
+      }, []);
+      const logout = () => {
+          auth.signOut()
+      }
     const profile = require('../../assets/images/login.jpg');
     return (
         <div className='shadow' >
@@ -42,6 +60,8 @@ export const Menu = (props) => {
                    <Link to='/mywishlist' className='list-item'> Item One <span className='gift-items'>10  <FaGift /> </span>  </Link> 
                 </li>
            </ul>
+           <p onClick={logout} className='text-center text-danger logout'>Log Out</p>
+           {!loggedIn && <Redirect to='/' /> }
         </div>
     )
 }
