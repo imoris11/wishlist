@@ -18,7 +18,9 @@ a {
   text-decoration: none;
   color:#0092DD;
 }
-
+li {
+  list-style: none;
+}
 input {
   background-color: transparent;
   border:0px;
@@ -36,6 +38,11 @@ input:focus {
   min-height: 100vh;
   display: flex;
   justify-content: center;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .col-sm-4{
   flex: 4;
@@ -101,6 +108,13 @@ input:focus {
 
 .btn-default {
   color:#0092DD;
+}
+.btn-info {
+  color:#EC663A;
+}
+
+.btn-danger {
+  color:#F52E5D;
 }
 
 .btn-success {
@@ -175,6 +189,12 @@ input:focus {
   text-align: center;
   align-items: center;
 }
+.time {
+  position: absolute;
+  margin-top:-10px; 
+  margin-left:15px;
+  font-size:10px;
+}
 .likes-container {
   display: flex;
   justify-content: center;
@@ -184,6 +204,22 @@ input:focus {
   font-weight: 600;
   font-size: 12px;
   margin-left: 5px;
+}
+.navigation {
+  display: flex;
+  align-items: center;
+}
+.back-button {
+  position: absolute;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.sidebar {
+  overflow-y: hidden;
+}
+.page-content {
+  overflow-y: scroll;
+  height: 100vh;
 }
 @media only screen and (max-width: 600px){
   .col-sm-8{

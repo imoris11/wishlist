@@ -1,0 +1,14 @@
+@media only screen and (max-width: 600px) {
+    .col-sm-3 {
+        display: none;
+    }
+}
+.items-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.wishlist-form {
+    width: 100%;
+    padding: 10px;
+}
