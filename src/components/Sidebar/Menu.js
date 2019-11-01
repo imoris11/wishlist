@@ -7,8 +7,8 @@ export const Menu = (props) => {
     return (
         <div className='shadow' >
             <div className='profile-container'>
-                <div style={{backgroundImage: `url(${profile})`, height:40, width:40, borderRadius:20, backgroundSize: 'cover', marginTop:20}} className='profile-picture'></div>
-                <h4 className='username' > Richard Igbiriki </h4>
+                <div style={{backgroundImage: `url(${profile})`, height:40, width:40, borderRadius:20, backgroundSize: 'cover', marginTop:20}} ></div>
+                <h4 className='username' style={{marginTop:30}}> Richard Igbiriki </h4>
             </div>
             <div className='center new-wishlist'>
                  <button className='btn btn-success btn-rounded'> Create a wishlist </button>

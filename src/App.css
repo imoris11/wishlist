@@ -1,5 +1,12 @@
+body {
+  background-color: whitesmoke;
+}
 p {
   font-size: 12px;
+}
+i, span {
+  font-size: 10px;
+  font-weight: 500;
 }
 h3{
   font-size: 24px;
@@ -92,6 +99,10 @@ input:focus {
   background-color: #0092DD;
 }
 
+.btn-default {
+  color:#0092DD;
+}
+
 .btn-success {
   background-color: #20AF6B;
 }
@@ -118,7 +129,62 @@ input:focus {
   color:#0092DD;
 }
 
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  margin: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  -webkit-box-shadow: 3px 3px 3px 3px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow:    3px 3px 3px 3px #ccc;  /* Firefox 3.5 - 3.6 */
+  box-shadow:         3px 3px 3px 3px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+}
 
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-header {
+  display: flex;
+}
+
+.card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-footer {
+  display: flex;
+}
+
+.item-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+.item-price {
+  font-size: 10px;
+  color:#F52E5D;
+  font-weight: 700;
+}
+
+.timestamp {
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+.likes-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.likes {
+  font-weight: 600;
+  font-size: 12px;
+  margin-left: 5px;
+}
 @media only screen and (max-width: 600px){
   .col-sm-8{
       display: flex;
