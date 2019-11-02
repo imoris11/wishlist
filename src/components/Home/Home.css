@@ -29,6 +29,10 @@
     display: flex;
 }
 
+.sidebarcontrol {
+    display: none;
+}
+
 @media only screen and (max-width: 600px) {
     .activities {
         display: none;
@@ -38,5 +42,5 @@
         display: flex;
         justify-content: center;
         flex-direction: column;
-      }
+    }
 }

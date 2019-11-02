@@ -230,5 +230,46 @@ input:focus {
   .form{
       width: 50vw;
   }
+  .sidebar {
+    display: none;;
+  }
+  .sidebarcontrol {
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: inline;
+    z-index: 2;
 }
-
+.sidebarcontrol {
+    margin: 1em;
+    width: 40px;
+  }
+  
+  .sidebarcontrol:after, 
+  .sidebarcontrol:before, 
+  .sidebarcontrol div {
+    background-color: rgb(0, 0, 0);
+    border-radius: 3px;
+    content: '';
+    display: block;
+    height: 3px;
+    margin: 7px 0;
+    transition: all .2s ease-in-out;
+  }
+.sidebarcontrol:hover:before {
+    transform: translateY(12px) rotate(135deg);
+  }
+  
+  .sidebarcontrol:hover:after {
+    transform: translateY(-12px) rotate(-135deg);
+  }
+  
+  .sidebarcontrol:hover div {
+    transform: scale(0);
+  }
+}
+.absolute {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
