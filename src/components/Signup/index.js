@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { FaGift } from 'react-icons/fa';
 import { auth, database } from '../../helpers/Firebase';
+import { inject } from 'mobx-react';
 const photoURL = 'https://firebasestorage.googleapis.com/v0/b/wishlist-b5d9c.appspot.com/o/585e4bf3cb11b227491c339a.png?alt=media&token=f8bf9736-7fb0-4173-9a21-b4adc85c3085';
-export const Signup = (props) => {
+const Signup = (props) => {
     const [ state, setState ] = useState({errorMessage:''});
     const [loading, setLoading ] = useState(false);
-
+    
     const handleChange = (e) => {
         let temp = {...state};
         temp[e.target.name] = e.target.value;
@@ -85,3 +86,5 @@ export const Signup = (props) => {
         </div>
     )
 }
+
+export default inject('store')(Signup)

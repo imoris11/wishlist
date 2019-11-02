@@ -1,11 +1,13 @@
 import React from 'react'
-import { Menu } from './Menu'
+import Menu from './Menu'
+import { inject, observer } from 'mobx-react'
 
-export const Sidebar = (props) => {
+ const Sidebar = (props) => {
+     let { store } = props;
     return (
         <div className='row'>
             <div className='col-sm-3 sidebar'>
-               <Menu />
+               <Menu store={store} />
             </div>
             <div className='col-sm-9 page-content'>
                  {props.children}
@@ -13,3 +15,5 @@ export const Sidebar = (props) => {
         </div>
     )
 }
+
+export default inject('store')(observer(Sidebar));

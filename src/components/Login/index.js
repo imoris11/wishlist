@@ -2,11 +2,14 @@ import React, { useState, useEffect} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { FaGift } from 'react-icons/fa';
 import { auth } from '../../helpers/Firebase';
+import { inject } from 'mobx-react';
 import './Login.css';
 
-export const Login = (props) => {
+ const Login = (props) => {
+    let { store } = props;
     const [ state, setState ] = useState({ errorMessage:''});
     const [loading, setLoading ] = useState(false);
+    
     const handleChange = (e) => {
         let temp = {...state};
         temp[e.target.name] = e.target.value;
@@ -28,7 +31,10 @@ export const Login = (props) => {
     }, []);
 
     const signin = () => {
-        auth.signInWithEmailAndPassword(state.email, state.password)
+        auth.signInWithEmailAndPassword(state.email, state.password).then(() => {
+            const user = auth.currentUser;
+            store.updateUser(user)
+        })
         .catch(error => {
             let temp = {...state};
             temp['errorMessage'] = error.message;
@@ -45,7 +51,6 @@ export const Login = (props) => {
 
     return (
         <div className="row">
-
            <div className="col-sm-4 image-container">
                <div  className="bg-image"></div>
            </div>
@@ -82,3 +87,5 @@ export const Login = (props) => {
         </div>
     )
 }
+
+export default inject('store')(Login)

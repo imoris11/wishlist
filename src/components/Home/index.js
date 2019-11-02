@@ -3,8 +3,11 @@ import { Wishlist } from './Wishlist';
 import { Activities } from './Activities';
 import './Home.css';
 import { auth } from '../../helpers/Firebase';
+import { inject } from 'mobx-react';
 
-export const Home = (props) => {
+const Home = (props) => {
+    // let { store } = props;
+    // console.log(store) 
     const handleChange = (e) => {
 
     }
@@ -25,3 +28,5 @@ export const Home = (props) => {
         </div>
     )
 }
+
+export default inject('store')(Home);
