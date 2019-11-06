@@ -5,7 +5,7 @@ import { Reset } from './components/Reset';
 import Home  from './components/Home';
 import { WishList } from './components/WishList';
 import { MyWishList } from './components/MyWishList';
-import { NewList } from './components/WishList/New';
+import NewList from './components/WishList/New';
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';import './App.css';
 import Sidebar from './components/Sidebar';
 import Profile from './components/Profile';

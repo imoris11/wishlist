@@ -6,7 +6,7 @@ export const User = types.model({
     name: '',
     email:'',
     photoURL: '',
-    paystack:'https://paystack.com',
+    paystack: '',
     created_at: 0,
     wishList: types.array(WishList, []),
     shared: types.array(WishList, [])
@@ -24,6 +24,12 @@ export const User = types.model({
     },
     updatePaystack(link){
         self.paystack = link
+    },
+    addWishlist(title, items){
+        self.wishList.push({
+            items,
+            title
+        })
     },
     sayHi() {
         console.log('Hi there')

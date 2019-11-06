@@ -31,17 +31,16 @@ export const MyWishList = (props) => {
     )
 }
 
-export const Item = (props) => {
+export const Item = ({ item, title }) => {
     const profile = require('../../assets/images/login.jpg');
     return (
         <div className='items-container'>
-           <h5>{props.title}</h5>
             <div className='card-item'>
                 <div className='container'>
                     <div style={{backgroundImage: `url(${profile})`, height:30, width:30, borderRadius:5, backgroundSize: 'cover', marginRight:10}} ></div>
-                    <p className='item-name'> Nike Shoes </p>
+                    <p className='item-name'> {item.name} </p>
                 </div>
-                <p className='item-price'>NGN1,200</p>
+                <p className='item-price'>NGN{item.price}</p>
                 <div className='container'>
                 <p className='btn btn-info'>Mark as Complete</p>
                 <p className='btn btn-default'><FaPencilAlt /></p>

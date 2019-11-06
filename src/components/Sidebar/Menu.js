@@ -27,7 +27,6 @@ import { observer, inject } from 'mobx-react';
                             shared: []
                         }
                         localStorage.setItem('user', JSON.stringify(tempUser));
-                        console.log(tempUser)
                         store.updatePaystack(snapshot.val());
                     }
                 })
@@ -63,26 +62,21 @@ import { observer, inject } from 'mobx-react';
                <p className='section-header'>My Wishlists</p>
            </div>
            <ul>
-               <li>
-                   <Link to='/mywishlist' className='list-item'> Item One <span className='gift-items'>10  <FaGift /> </span>  </Link> 
-                </li>
-                <li>
-                   <Link to='/mywishlist' className='list-item'> Item One <span className='gift-items'>10  <FaGift /> </span>  </Link> 
-                </li>
-                <li>
-                   <Link to='/mywishlist' className='list-item'> Item One <span className='gift-items'>10  <FaGift /> </span>  </Link> 
-                </li>
+               {store.wishList.map((list, idx) =>
+                    <li key={idx}>
+                        <Link to='/mywishlist' className='list-item'> {list.title} <span className='gift-items'>{list.numberOfItems()}  <FaGift /> </span>  </Link> 
+                    </li>
+                )}
            </ul>
            <div className='section'>
                <p className='section-header'>Shared with Me</p>
            </div>
            <ul>
-           <li>
-                   <Link to='/mywishlist' className='list-item'> Item One <span className='gift-items'>10  <FaGift /> </span>  </Link> 
-                </li>
-                <li>
-                   <Link to='/mywishlist' className='list-item'> Item One <span className='gift-items'>10  <FaGift /> </span>  </Link> 
-                </li>
+           {store.shared.map((list, idx) =>
+                    <li key={idx}>
+                        <Link to='/mywishlist' className='list-item'> {list.title} <span className='gift-items'>{list.numberOfItems}  <FaGift /> </span>  </Link> 
+                    </li>
+                )}
            </ul>
            <p onClick={logout} className='text-center text-danger logout'>Log Out</p>
            {!loggedIn && <Redirect to='/' /> }
