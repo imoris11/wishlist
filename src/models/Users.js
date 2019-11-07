@@ -9,8 +9,13 @@ export const User = types.model({
     paystack: '',
     created_at: 0,
     wishList: types.array(WishList, []),
-    shared: types.array(WishList, [])
-}).actions(self => ({
+    recentLists: types.array(WishList, [])
+}).views(self => ({
+    getList(key) {
+       // return self.recentLists[0]
+        return self.recentLists.filter((l) => l.key === key )
+    }
+})).actions(self => ({
     updateUser(user) {
         self.uid = user.uid
         self.name = user.displayName
@@ -25,13 +30,18 @@ export const User = types.model({
     updatePaystack(link){
         self.paystack = link
     },
-    addWishlist(title, items){
-        self.wishList.push({
-            items,
-            title
-        })
+    addWishlist(list){
+        self.wishList.push(list)
+    },
+    setWishLists(wishLists) {
+       self.wishList = wishLists
+    },
+    setRecentLists(lists) {
+        self.recentLists = lists
     },
     sayHi() {
         console.log('Hi there')
     }
-}));
+})
+
+);

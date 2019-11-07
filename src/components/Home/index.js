@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { Wishlist } from './Wishlist';
+import React from 'react'
+import Wishlist from './Wishlist';
 import { Activities } from './Activities';
 import './Home.css';
-import { auth } from '../../helpers/Firebase';
 import { inject } from 'mobx-react';
 
 const Home = (props) => {

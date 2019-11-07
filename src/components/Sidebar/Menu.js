@@ -8,10 +8,39 @@ import { observer, inject } from 'mobx-react';
  const Menu = (props) => {
     const [loggedIn, setLoggedIn ] = useState(true);
     let { store } = props;
+    const getMyWishlists = (userId) => {
+        const wishLists = []
+        database.ref().child('wishlists').orderByChild('uid').equalTo(userId).once('value', snapshots => {
+            if (snapshots.exists()) {
+                snapshots.forEach((wishList) => {
+                    wishLists.push({...wishList.val(), key: wishList.key });
+                    store.setWishLists(wishLists);
+                })
+            }else {
+                //No wishes
+            }
+        });
+    }
+
+    const getRecentLists = () => {
+        const wishLists = []
+        database.ref().child('wishlists').limitToFirst(100).once('value', snapshots => {
+            if (snapshots.exists()) {
+                snapshots.forEach((wishList) => {
+                    wishLists.push({...wishList.val(), key: wishList.key });
+                    store.setRecentLists(wishLists);
+                })
+            }else {
+                //No wishes
+            }
+        });
+    }
   useEffect(() => {
     const subscribe = auth.onAuthStateChanged(user => {
         if(user) {
             let local_user = JSON.parse(localStorage.getItem('user'));
+            getMyWishlists(user.uid);
+            getRecentLists();
             if (local_user === null) {
                 store.updateUser(user);
                 database.ref().child('users').child(user.uid).child('paystack').once('value', snapshot =>{
@@ -29,8 +58,7 @@ import { observer, inject } from 'mobx-react';
                         localStorage.setItem('user', JSON.stringify(tempUser));
                         store.updatePaystack(snapshot.val());
                     }
-                })
-                
+                });
             }
             setLoggedIn(true);
         }else{
@@ -62,19 +90,10 @@ import { observer, inject } from 'mobx-react';
                <p className='section-header'>My Wishlists</p>
            </div>
            <ul>
+               {store.wishList.length === 0 && <p>No Wishlists</p>}
                {store.wishList.map((list, idx) =>
                     <li key={idx}>
                         <Link to='/mywishlist' className='list-item'> {list.title} <span className='gift-items'>{list.numberOfItems()}  <FaGift /> </span>  </Link> 
-                    </li>
-                )}
-           </ul>
-           <div className='section'>
-               <p className='section-header'>Shared with Me</p>
-           </div>
-           <ul>
-           {store.shared.map((list, idx) =>
-                    <li key={idx}>
-                        <Link to='/mywishlist' className='list-item'> {list.title} <span className='gift-items'>{list.numberOfItems}  <FaGift /> </span>  </Link> 
                     </li>
                 )}
            </ul>

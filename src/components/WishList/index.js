@@ -1,29 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './WishList.css';
 import { FaHeart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { Nav } from '../Navigation';
-export const WishList = (props) => {
-    const profile = require('../../assets/images/login.jpg');
+import { inject, observer } from 'mobx-react';
+import moment from 'moment';
+import { database } from '../../helpers/Firebase';
+
+const WishList =  ( props ) => {
+    const [list, setList] = useState({items:[]});
+    const key = props.match.params.id;
+    const getWishList = () => {
+        database.ref().child('wishlists').child(key).once('value', snapshot => {
+            if (snapshot.exists()) {
+                setList({...snapshot.val(), key: snapshot.key });
+            }
+        });
+    }
+    useEffect(() => {
+        getWishList()
+    }, list)
     return (
         <div>
             <Nav title="Wishlist" />
             <div style={{marginLeft:40}}  className='card-header'>
-                <div style={{backgroundImage: `url(${profile})`, height:30, width:30, borderRadius:15, backgroundSize: 'cover', marginTop:20}} ></div>
+                <div style={{backgroundImage: `url(${list.profilePicture})`, height:30, width:30, borderRadius:15, backgroundSize: 'cover', marginTop:20}} ></div>
                 <div className='user-info'>
-                    <p className='username' > Richard Igbiriki </p>
-                    <p className='time'>June 19, 2019</p>
+                    <p className='username' > {list.displayName} </p>
+                    <p className='time'>{moment(list.createdAt).format('LL')}</p>
                 </div>
             </div>
             <div className='card'>
-                <div className='card-body'>
-                    <Item /> 
+                <div >
+                    <h5> {list.title} </h5>
+                    {list.items.map((item) =>
+                        <Item title={list.title} item={item} key={list.key} /> 
+                    )}
+                    
                 </div>
                 <div className='card-footer'>
-                    <div className='likes-container' >
-                        <FaHeart />
-                        <span className='likes'>21</span>
-                    </div>
                     <Link to='/'> <p className='btn btn-default'>Share List</p> </Link>
                 </div>
             </div>
@@ -31,17 +46,15 @@ export const WishList = (props) => {
     )
 }
 
-export const Item = (props) => {
-    const profile = require('../../assets/images/login.jpg');
+export const Item = ({ item }) => {
     return (
         <div className='items-container'>
-            <h5>Birthday Gift Suggestions</h5>
             <div className='card-item'>
                 <div className='container'>
-                    <div style={{backgroundImage: `url(${profile})`, height:30, width:30, borderRadius:5, backgroundSize: 'cover', marginRight:10}} ></div>
-                    <p className='item-name'> Nike Shoes </p>
+                    <div style={{backgroundImage: `url(${item.image})`, height:30, width:30, borderRadius:5, backgroundSize: 'cover', marginRight:10}} ></div>
+                    <p className='item-name'> {item.name} </p>
                 </div>
-                <p className='item-price'>NGN1,200</p>
+                <p className='item-price'>&#8358; {item.price}</p>
                 <div className='container'>
                 <p className='btn btn-primary btn-rounded'>Buy</p>
                 <p className='btn btn-info'>Pay</p>
@@ -51,3 +64,5 @@ export const Item = (props) => {
         </div> 
     )
 }
+
+export default inject('store')(observer(WishList))

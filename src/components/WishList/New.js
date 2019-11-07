@@ -18,7 +18,6 @@ import { database, auth } from '../../helpers/Firebase';
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        store.addWishlist(state.title, items);
         saveItems();
 
         let temp = {...state};
@@ -28,18 +27,18 @@ import { database, auth } from '../../helpers/Firebase';
     }
 
     const saveItems = () => {
-        const total = items.reduce((a, b) => a.price+b.price || 0)
         const user = auth.currentUser
-        const key = database.ref().child('wishlists').push({
+        const data = {
             title:state.title,
-            number_of_items: items.length,
-            price: total,
             uid: user.uid,
-            displayName: user.displayName
-        }).key
-        items.forEach((item) => {
-            database.ref().child('wishlist_items').child(key).push(item);
-        })
+            items:items,
+            displayName: user.displayName,
+            profilePicture: user.photoURL,
+            createdAt: Date.now()
+        }
+        const key = database.ref().child('wishlists').push(data).key
+        data['key'] = key
+        store.addWishlist(data);
     }
 
     const addItem = () => {
