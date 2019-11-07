@@ -1,25 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import './WishList.css';
-import { FaHeart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { Nav } from '../Navigation';
 import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 import { database } from '../../helpers/Firebase';
+import loadingGif from '../../assets/images/loading.gif';
 
 const WishList =  ( props ) => {
     const [list, setList] = useState({items:[]});
+    const [ loading, setLoading ] = useState(true);
     const key = props.match.params.id;
     const getWishList = () => {
         database.ref().child('wishlists').child(key).once('value', snapshot => {
             if (snapshot.exists()) {
                 setList({...snapshot.val(), key: snapshot.key });
+                setLoading(false);
             }
         });
     }
     useEffect(() => {
         getWishList()
     }, list)
+    if (loading) 
+        return (
+            <div className='text-center'>
+                <Nav title="Wishlist" />
+                <img src={loadingGif} alt="Loading icon" />
+            </div>
+        )
+
     return (
         <div>
             <Nav title="Wishlist" />
@@ -34,7 +44,7 @@ const WishList =  ( props ) => {
                 <div >
                     <h5> {list.title} </h5>
                     {list.items.map((item) =>
-                        <Item title={list.title} item={item} key={list.key} /> 
+                        <Item item={item} key={list.key} /> 
                     )}
                     
                 </div>
@@ -56,7 +66,7 @@ export const Item = ({ item }) => {
                 </div>
                 <p className='item-price'>&#8358; {item.price}</p>
                 <div className='container'>
-                <p className='btn btn-primary btn-rounded'>Buy</p>
+                <a target="_blank" href={item.productUrl} className='btn btn-primary btn-rounded'>Buy</a>
                 <p className='btn btn-info'>Pay</p>
             </div>
             </div>

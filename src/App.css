@@ -101,6 +101,7 @@ input:focus {
   border:0px;
   width: auto;
   margin-top: 10px;
+  cursor: pointer;
 }
 .btn-primary {
   background-color: #0092DD;
@@ -116,7 +117,17 @@ input:focus {
 .btn-danger {
   color:#F52E5D;
 }
-
+.btn-solid-danger {
+  background-color: #F52E5D;
+  color: #ffffff;
+  opacity: 1;
+  border-radius: 5px;
+  width: 100px;
+  transition: opacity 0.2s ease-in 0.1s;
+}
+.btn-solid-danger:hover {
+  opacity: 0.8;
+}
 .btn-success {
   background-color: #20AF6B;
 }

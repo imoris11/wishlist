@@ -17,7 +17,7 @@ import { observer, inject } from 'mobx-react';
                     store.setWishLists(wishLists);
                 })
             }else {
-                //No wishes
+                store.setNoWishes();
             }
         });
     }
@@ -31,7 +31,7 @@ import { observer, inject } from 'mobx-react';
                     store.setRecentLists(wishLists);
                 })
             }else {
-                //No wishes
+                store.setNoWishes();
             }
         });
     }
@@ -93,7 +93,7 @@ import { observer, inject } from 'mobx-react';
                {store.wishList.length === 0 && <p>No Wishlists</p>}
                {store.wishList.map((list, idx) =>
                     <li key={idx}>
-                        <Link to='/mywishlist' className='list-item'> {list.title} <span className='gift-items'>{list.numberOfItems()}  <FaGift /> </span>  </Link> 
+                        <Link to={'/mywishlist/'+list.key} className='list-item'> {list.title} <span className='gift-items'>{list.numberOfItems()}  <FaGift /> </span>  </Link> 
                     </li>
                 )}
            </ul>

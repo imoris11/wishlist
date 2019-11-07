@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaGift } from 'react-icons/fa';
 import { Item } from '../MyWishList'
 import { Nav } from '../Navigation';
@@ -9,7 +9,7 @@ import { database, auth } from '../../helpers/Firebase';
      let { store } = props;
      const [state, setState ] = useState({});
      const [items, setItems ] = useState([]);
-    
+     const key = props.match.params.id;
 
     const handleChange = (e) => {
         let temp = {...state};
@@ -36,11 +36,28 @@ import { database, auth } from '../../helpers/Firebase';
             profilePicture: user.photoURL,
             createdAt: Date.now()
         }
-        const key = database.ref().child('wishlists').push(data).key
-        data['key'] = key
-        store.addWishlist(data);
+        if (key) {
+            database.ref().child('wishlists').child(key).update(data);
+            data['key'] = key;
+            store.updateWishlist(key, data);
+            addActivity(user, `updated ${state.title}`);
+        }else{
+            const key = database.ref().child('wishlists').push(data).key;
+            data['key'] = key;
+            store.addWishlist(data);
+            addActivity(user, `created a new wishlist, ${state.title}`);
+        }
     }
 
+    const addActivity = (user, message ) => {
+        const data = {
+            profilePicture: user.photoURL,
+            displayName: user.displayName,
+            createdAt: Date.now(),
+            action: message
+        }
+        database.ref().child('activities').push(data);
+    }
     const addItem = () => {
         let item = {
             name: state.name,
@@ -61,6 +78,47 @@ import { database, auth } from '../../helpers/Firebase';
         temp.image = '';
         setState(temp);
     }
+
+    const onEdit = ( item ) => {
+        const obj = {
+            ...state,
+            ...item,
+            link: item.productUrl
+        }
+        setState(obj);
+        const itms = items.filter((it) => it.name !== item.name);
+        setItems(itms);
+    }
+
+    const handleDelete = ( item ) => {
+        const temp_items = items.filter((it) => it.name !== item.name);
+        setItems(temp_items);
+    }
+
+    const getWishlist = (key) => {
+        database.ref().child('wishlists').child(key).once('value', snapshot => {
+            if (snapshot.exists()) {
+                let wishlist = {
+                    ...state,
+                    title:snapshot.val().title
+                };
+                setState(wishlist);
+                setItems(snapshot.val().items);
+            }
+        });
+    }
+    useEffect(() => {
+        if (key) {
+            getWishlist(key);
+        }
+    }, state);
+
+    const deleteList = () => {
+        store.removeItem(key);
+        database.ref().child('wishlists').child(key).remove();
+        window.location.href='/home';
+    }
+
     return (
         <>
             <Nav title='New Wishlist' />
@@ -74,7 +132,7 @@ import { database, auth } from '../../helpers/Firebase';
                                 </div>
                                 <h5>Items</h5>
                                 {items.map((item, idx) =>
-                                    <Item title='Items' key={idx} item={item} />
+                                    <Item onEdit={onEdit} onDelete={handleDelete}  key={idx} item={item} />
                                 )}
                                 
                                 <div className='form-group'>
@@ -102,11 +160,15 @@ import { database, auth } from '../../helpers/Firebase';
                                     <p style={{cursor:'pointer'}} onClick={addItem} className='btn btn-info'>Add Item</p>
                                 </div>
                                 <div className='pull-right'>
-                                    <button type='submit' className='btn btn-primary'>Create Wishlist</button>
+                                    {key ?  <button type='submit' className='btn btn-success'> Update Wishlist</button> :
+                                    <button type='submit' className='btn btn-primary'>Create Wishlist</button> }
                                 </div>
                             </form>
                     </div>
                </div>
+               {key && <div className='text-center' style={{marginBottom:30}}>
+                <button onClick={deleteList} className='btn btn-solid-danger'>DELETE</button>
+            </div>}
         </>
        
     )

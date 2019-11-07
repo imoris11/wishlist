@@ -8,6 +8,8 @@ export const User = types.model({
     photoURL: '',
     paystack: '',
     created_at: 0,
+    loading: true,
+    noWishes:false,
     wishList: types.array(WishList, []),
     recentLists: types.array(WishList, [])
 }).views(self => ({
@@ -32,12 +34,34 @@ export const User = types.model({
     },
     addWishlist(list){
         self.wishList.push(list)
+        self.recentLists.push(list)
+    },
+    updateWishlist(key, list) {
+        let index = 0;
+        self.wishList.forEach((it, idx) =>{
+            if (it.key === key) {
+                index = idx
+            }
+        });
+        self.wishList[index] = list
+        
     },
     setWishLists(wishLists) {
        self.wishList = wishLists
+       self.loading = false
+       self.noWishes = false
+
     },
     setRecentLists(lists) {
         self.recentLists = lists
+    },
+    setNoWishes() {
+        self.loading = false
+        self.noWishes = true
+    },
+    removeItem(key) {
+        const items = self.wishList.filter((it) => it.key !== key)
+        self.wishList = items
     },
     sayHi() {
         console.log('Hi there')

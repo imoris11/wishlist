@@ -1,19 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import moment from 'moment';
-
+import loadingGif from '../../assets/images/loading.gif';
 const Wishlist = (props) => {
     const { store } = props;
+
+    if (store.loading) 
         return (
-            <div >
-                <h4 style={{marginLeft:20}}>Recent Wishlists</h4>
-                {store.recentLists.map((list) =>
-                    <List list={list} key={list.key} />
-                )}
-                        
+            <div className='text-center'>
+               <h4 style={{marginLeft:20}}>Recent Wishlists</h4>
+                <img src={loadingGif} alt="Loading icon" />
             </div>
         )
+
+    if ( store.noWishes ) 
+        return (
+            <div className='text-center'>
+                <h4 style={{marginLeft:20}}>Recent Wishlists</h4>
+                <p className='text-info'> No Wishlists </p>
+            </div>
+        )
+
+    return (
+        <div >
+            <h4 style={{marginLeft:20}}>Recent Wishlists</h4>
+            {store.recentLists.map((list) =>
+                <List list={list} key={list.key} />
+            )}
+                    
+        </div>
+    )
 }
 
 const List = ({ list }) => {
