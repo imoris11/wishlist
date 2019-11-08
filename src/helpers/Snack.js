@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const styles = {
     snack: {
@@ -13,8 +13,14 @@ const styles = {
     }
 }
 export const Snack = ({ message }) => {
+    const [ visible, setVisible ] = useState(true);
+    useEffect(() => {
+        setTimeout(() => {
+            setVisible(false);
+        }, 3000);
+    })
     return (
-        <div 
+        visible && <div 
             className='text-center' 
             style={styles.snack}>
             <p >{ message }</p>

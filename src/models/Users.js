@@ -14,7 +14,6 @@ export const User = types.model({
     recentLists: types.array(WishList, [])
 }).views(self => ({
     getList(key) {
-       // return self.recentLists[0]
         return self.recentLists.filter((l) => l.key === key )
     }
 })).actions(self => ({
@@ -25,9 +24,13 @@ export const User = types.model({
         self.email = user.email
         self.created_at = user.created_at
     },
-    saveUser(name, link) {
+    updateProfilePicture(profilePicture) {
+        self.photoURL = profilePicture
+    },
+    saveUser(name, link, photoURL) {
         self.paystack = link
         self.name = name
+        self.photoURL = photoURL
     },
     updatePaystack(link){
         self.paystack = link
