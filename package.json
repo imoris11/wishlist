@@ -9,6 +9,7 @@
     "mobx-state-tree": "^3.15.0",
     "moment": "^2.24.0",
     "react": "^16.11.0",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.11.0",
     "react-icons": "^3.8.0",
     "react-router-dom": "^5.1.2",

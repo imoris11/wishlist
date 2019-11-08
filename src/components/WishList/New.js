@@ -40,43 +40,57 @@ import { database, auth } from '../../helpers/Firebase';
             database.ref().child('wishlists').child(key).update(data);
             data['key'] = key;
             store.updateWishlist(key, data);
-            addActivity(user, `updated ${state.title}`);
+            addActivity(user, `updated ${state.title}`, key);
         }else{
             const key = database.ref().child('wishlists').push(data).key;
             data['key'] = key;
             store.addWishlist(data);
-            addActivity(user, `created a new wishlist, ${state.title}`);
+            addActivity(user, `created a new wishlist, ${state.title}`, key);
         }
     }
 
-    const addActivity = (user, message ) => {
+    const addActivity = (user, message, key ) => {
         const data = {
+            wishListKey: key,
             profilePicture: user.photoURL,
             displayName: user.displayName,
             createdAt: Date.now(),
+            uid: user.uid,
             action: message
         }
         database.ref().child('activities').push(data);
     }
     const addItem = () => {
-        let item = {
-            name: state.name,
-            price: Number(state.price),
-            productUrl: state.link,
-            image: state.image
+        //Validate item
+        if ( !state.name || !state.price || !state.link || !state.image || isNaN(Number(state.price))) {
+            let temp = {...state};
+            temp['error'] = 'All fields are required, and price must be a number';
+            setState(temp);
+        }else{
+            console.log(Number(state.price))
+            //Create a new item object
+            let item = {
+                name: state.name,
+                price: Number(state.price),
+                productUrl: state.link,
+                image: state.image
+            }
+            //Add item to items list
+            let temp_items = [...items]
+            temp_items.push(item);
+            setItems(temp_items);
+            
+            //Reset state details to empty
+            let temp = {...state};
+            temp.name = '';
+            temp.price = '';
+            temp.link = '';
+            temp.image = '';
+            temp.error = ''
+            setState(temp);
         }
         
-        let temp_items = [...items]
-        temp_items.push(item);
-        setItems(temp_items);
-        
-
-        let temp = {...state};
-        temp.name = '';
-        temp.price = '';
-        temp.link = '';
-        temp.image = '';
-        setState(temp);
+  
     }
 
     const onEdit = ( item ) => {
@@ -111,7 +125,7 @@ import { database, auth } from '../../helpers/Firebase';
         if (key) {
             getWishlist(key);
         }
-    }, state);
+    }, [state, props.match.params.id]);
 
     const deleteList = () => {
         store.removeItem(key);
@@ -141,7 +155,7 @@ import { database, auth } from '../../helpers/Firebase';
                                 </div>
 
                                 <div className='form-group'>
-                                    <input value={state.price} type="text" placeholder='Price' name="price" onChange={handleChange} />
+                                    <input type="number" value={state.price} type="text" placeholder='Price' name="price" onChange={handleChange} />
                                     <div className='divider'></div>
                                 </div>
 
@@ -159,10 +173,11 @@ import { database, auth } from '../../helpers/Firebase';
                                 <div className='actions'> 
                                     <p style={{cursor:'pointer'}} onClick={addItem} className='btn btn-info'>Add Item</p>
                                 </div>
-                                <div className='pull-right'>
+                                {state.error && <p className='text-center info text-danger'> {state.error} </p> }
+                                {items.length > 0 && <div className='pull-right'>
                                     {key ?  <button type='submit' className='btn btn-success'> Update Wishlist</button> :
                                     <button type='submit' className='btn btn-primary'>Create Wishlist</button> }
-                                </div>
+                                </div> }
                             </form>
                     </div>
                </div>

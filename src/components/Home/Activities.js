@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { database } from '../../helpers/Firebase';
 import loadingGif from '../../assets/images/loading2.gif';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 const Activities = (props) => {
     const [ activities, setActivities ] = useState([]);
@@ -12,7 +13,7 @@ const Activities = (props) => {
             const temp = [];
             if (snapshots.exists()) {
                 snapshots.forEach((snapshot) => {
-                    temp.push({...snapshot.val(), key: snapshot.key });
+                    temp.unshift({...snapshot.val(), key: snapshot.key });
                     setLoading(false);
                 });
                 setActivities(temp);
@@ -47,7 +48,7 @@ const Activities = (props) => {
 
 export const Activity = ({ activity }) => {
     return (
-        <div className='activity-container'>
+        <Link to={`/wishlists/${activity.wishListKey}`} className='activity-container'>
              <div className='profile-picture' 
              style={{backgroundImage: `url(${activity.profilePicture})`, height:30, width:30, borderRadius:15, backgroundSize: 'cover'}} 
              ></div>
@@ -56,7 +57,7 @@ export const Activity = ({ activity }) => {
                 <i className='timestamp'> {moment(activity.createdAt).format('LL')} </i>
              </div>
            
-        </div>
+        </Link>
     )
 }
 

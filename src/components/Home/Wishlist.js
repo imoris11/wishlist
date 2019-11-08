@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 import loadingGif from '../../assets/images/loading.gif';
+import { Share } from '../../helpers/Share';
+
 const Wishlist = (props) => {
     const { store } = props;
 
@@ -57,7 +59,7 @@ const List = ({ list }) => {
             </div>
             <div className='card-footer'>
                 <Link to={`/wishlists/${list.key}`}> <p className='btn btn-default'>View Full List</p> </Link>
-                <Link onClick={shareList} to='/'> <p className='btn btn-default'>Share List</p> </Link> 
+                <Share link={`https://wishlist-b5d9c.web.app/public/wishlist/${list.key}`}  />
             </div>
         </div>
     )

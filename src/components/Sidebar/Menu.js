@@ -13,7 +13,7 @@ import { observer, inject } from 'mobx-react';
         database.ref().child('wishlists').orderByChild('uid').equalTo(userId).once('value', snapshots => {
             if (snapshots.exists()) {
                 snapshots.forEach((wishList) => {
-                    wishLists.push({...wishList.val(), key: wishList.key });
+                    wishLists.unshift({...wishList.val(), key: wishList.key });
                     store.setWishLists(wishLists);
                 })
             }else {
@@ -27,7 +27,7 @@ import { observer, inject } from 'mobx-react';
         database.ref().child('wishlists').limitToFirst(100).once('value', snapshots => {
             if (snapshots.exists()) {
                 snapshots.forEach((wishList) => {
-                    wishLists.push({...wishList.val(), key: wishList.key });
+                    wishLists.unshift({...wishList.val(), key: wishList.key });
                     store.setRecentLists(wishLists);
                 })
             }else {

@@ -201,7 +201,6 @@ input:focus {
   align-items: center;
 }
 .time {
-  position: absolute;
   margin-top:-10px; 
   margin-left:15px;
   font-size:10px;
@@ -256,3 +255,17 @@ input:focus {
   }
 }
 
+@media only screen and (max-width: 600px) {
+  .col-sm-3 {
+      display: none;
+  }
+}
+.items-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.wishlist-form {
+  width: 100%;
+  padding: 10px;
+}
