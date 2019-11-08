@@ -1,8 +1,3 @@
-@media only screen and (max-width: 600px) {
-    .col-sm-3 {
-        display: none;
-    }
-}
 .items-container {
     display: flex;
     flex-direction: column;

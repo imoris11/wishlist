@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
@@ -40,6 +41,22 @@ const List = ({ list }) => {
         
     }
     return (
+<div>
+			<div>
+				{toggle && (
+					<div className="absolute">
+						<Menu />
+						<div className="sidebar-control" onClick={handleIconClick}>
+							<div className="sidebar-control-icon">&#9747;</div>
+						</div>
+					</div>
+				)}
+				{!toggle && (
+					<div className="sidebar-control" onClick={handleIconClick}>
+						<div className="sidebar-control-icon">&#9776;</div>
+					</div>
+				)}
+
         <div className='card'>
             <div className='card-header'>
                 <div style={{backgroundImage: `url(${list.profilePicture})`, height:30, width:30, borderRadius:15, backgroundSize: 'cover', marginTop:20}} ></div>
@@ -62,6 +79,8 @@ const List = ({ list }) => {
                 <Share link={`https://wishlist-b5d9c.web.app/public/wishlist/${list.key}`}  />
             </div>
         </div>
+
+</div>
     )
 }
 

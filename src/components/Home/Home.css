@@ -1,42 +1,46 @@
 .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 .form-input {
-    border: 1px solid #0092DD;
-    width: 170px;
-    border-radius: 20px;
-    margin-top: 20px;
-    text-align: center;
+	border: 1px solid #0092dd;
+	width: 170px;
+	border-radius: 20px;
+	margin-top: 20px;
+	text-align: center;
 }
 
 .activity-container {
-    margin:10px;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid #707070;
+	margin: 10px;
+	padding: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-bottom: 1px solid #707070;
 }
 
 .activity {
-    flex:2
+	flex: 2;
 }
 
 .profile-picture {
-    display: flex;
+	display: flex;
+}
+
+.sidebar-control {
+	display: none;
 }
 
 @media only screen and (max-width: 600px) {
-    .activities {
-        display: none;
-    }
-    .row {
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-      }
+	.activities {
+		display: none;
+	}
+	.row {
+		min-height: 100vh;
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+	}
 }
