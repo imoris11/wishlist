@@ -1,23 +1,64 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { inject, observer } from 'mobx-react';
+import { database } from '../../helpers/Firebase';
+import loadingGif from '../../assets/images/loading2.gif';
+import moment from 'moment';
+import { Link } from 'react-router-dom';
 
-export const Activities = (props) => {
+const Activities = (props) => {
+    const [ activities, setActivities ] = useState([]);
+    const [ loading, setLoading ] = useState(true);
+    const getRecentActivities = () => {
+        database.ref().child('activities').once('value', snapshots => {
+            const temp = [];
+            if (snapshots.exists()) {
+                snapshots.forEach((snapshot) => {
+                    temp.unshift({...snapshot.val(), key: snapshot.key });
+                    setLoading(false);
+                });
+                setActivities(temp);
+            }else{
+                setLoading(false);
+            }
+        });
+    }
+    useEffect(() => {
+        getRecentActivities();
+    }, activities);
+
+    if ( loading) 
+        return (
+            <p> Loading... </p>
+        )
+
+    if ( !loading && activities.length === 0 ) 
+        return (
+            <p>No recent activities</p>
+        )
+
     return (
-        <Activity />
+        <>
+            {activities.map((activity) => 
+                <Activity key={activity.key} activity={activity} />
+            )}
+        </>
+       
     )
 } 
 
-export const Activity = (props) => {
-    const profile = require('../../assets/images/login.jpg');
+export const Activity = ({ activity }) => {
     return (
-        <div className='activity-container'>
+        <Link to={`/wishlists/${activity.wishListKey}`} className='activity-container'>
              <div className='profile-picture' 
-             style={{backgroundImage: `url(${profile})`, height:30, width:30, borderRadius:15, backgroundSize: 'cover'}} 
+             style={{backgroundImage: `url(${activity.profilePicture})`, height:30, width:30, borderRadius:15, backgroundSize: 'cover'}} 
              ></div>
              <div className='activity'>
-                <p  style={{margin:10}}><b> Richard Igbiriki </b> created a new wish list   </p>
-                <i className='timestamp'>June 19, 2019</i>
+                <p  style={{margin:10}}><b> {activity.displayName} </b> {activity.action}   </p>
+                <i className='timestamp'> {moment(activity.createdAt).format('LL')} </i>
              </div>
            
-        </div>
+        </Link>
     )
 }
+
+export default inject('store')(observer(Activities));

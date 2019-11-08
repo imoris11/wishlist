@@ -94,13 +94,14 @@ input:focus {
 	margin-top: 25px;
 }
 .btn {
-	padding: 10px;
-	color: white;
-	font-size: 14px;
-	font-weight: 500;
-	border: 0px;
-	width: auto;
-	margin-top: 10px;
+  padding: 10px;
+  color:white;
+  font-size: 14px;
+  font-weight: 500;
+  border:0px;
+  width: auto;
+  margin-top: 10px;
+  cursor: pointer;
 }
 .btn-primary {
 	background-color: #0092dd;
@@ -116,7 +117,17 @@ input:focus {
 .btn-danger {
 	color: #f52e5d;
 }
-
+.btn-solid-danger {
+  background-color: #F52E5D;
+  color: #ffffff;
+  opacity: 1;
+  border-radius: 5px;
+  width: 100px;
+  transition: opacity 0.2s ease-in 0.1s;
+}
+.btn-solid-danger:hover {
+  opacity: 0.8;
+}
 .btn-success {
 	background-color: #20af6b;
 }
@@ -190,10 +201,9 @@ input:focus {
 	align-items: center;
 }
 .time {
-	position: absolute;
-	margin-top: -10px;
-	margin-left: 15px;
-	font-size: 10px;
+  margin-top:-10px; 
+  margin-left:15px;
+  font-size:10px;
 }
 .likes-container {
 	display: flex;
@@ -249,4 +259,45 @@ input:focus {
 	top: 0;
 	left: 0;
 	width: 90%;
+}
+  overflow-y: scroll;
+  height: 100vh;
+}
+.text-center {
+  text-align: center;
+}
+.text-danger {
+  color:#F52E5D;
+}
+.info {
+  font-size: 14px;
+  font-weight: 500;
+}
+.text-success{
+  color: #20AF6B;
+}
+@media only screen and (max-width: 600px){
+  .col-sm-8{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .form{
+      width: 50vw;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .col-sm-3 {
+      display: none;
+  }
+}
+.items-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.wishlist-form {
+  width: 100%;
+  padding: 10px;
 }

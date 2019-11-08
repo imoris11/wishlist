@@ -27,7 +27,10 @@
 .list-item {
     display: flex;
     justify-content: space-between;
+    font-size: 14px;
+    font-weight: 600;
     margin: 10px;
+
 }
 .gift-items {
     display: block;
@@ -44,4 +47,10 @@
     -webkit-box-shadow: 3px 3px 3px 3px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
     -moz-box-shadow:    3px 3px 3px 3px #ccc;  /* Firefox 3.5 - 3.6 */
     box-shadow:         3px 3px 3px 3px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+  }
+
+  .logout {
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
   }

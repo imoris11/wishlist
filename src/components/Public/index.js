@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import './WishList.css';
-import { Link } from 'react-router-dom';
 import { Nav } from '../Navigation';
-import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 import { database } from '../../helpers/Firebase';
 import loadingGif from '../../assets/images/loading.gif';
 import { Share } from '../../helpers/Share';
 
-const WishList =  ( props ) => {
+export const PublicList =  ( props ) => {
     const { store } = props;
     const [list, setList] = useState({items:[]});
     const [ loading, setLoading ] = useState(true);
@@ -33,26 +30,32 @@ const WishList =  ( props ) => {
         )
 
     return (
-        <div>
-            <Nav title="Wishlist" />
-            <div style={{marginLeft:40}}  className='card-header'>
-                <div style={{backgroundImage: `url(${list.profilePicture})`, height:30, width:30, borderRadius:15, backgroundSize: 'cover', marginTop:20}} ></div>
-                <div className='user-info'>
-                    <p className='username' > {list.displayName} </p>
-                    <p className='time'>{moment(list.createdAt).format('LL')}</p>
+        <div >
+            <div className='col-sm-2'></div>
+            <div className='col-sm-6'>
+            <div >
+                <div style={{marginLeft:40}}  className='card-header'>
+                    <div style={{backgroundImage: `url(${list.profilePicture})`, height:30, width:30, borderRadius:15, backgroundSize: 'cover', marginTop:20}} ></div>
+                    <div className='user-info'>
+                        <p className='username' > {list.displayName} </p>
+                        <p className='time'>{moment(list.createdAt).format('LL')}</p>
+                    </div>
+                </div>
+                <div className='card'>
+                    <div >
+                        <h5> {list.title} </h5>
+                        {list.items.map((item) =>
+                            <Item paystack={list.paystack} item={item} key={list.key} /> 
+                        )}
+                        
+                    </div>
+                    <Share link={`https://wishlist-b5d9c.web.app/public/wishlist/${list.key}`} />
                 </div>
             </div>
-            <div className='card'>
-                <div >
-                    <h5> {list.title} </h5>
-                    {list.items.map((item) =>
-                        <Item paystack={store.paystack} item={item} key={list.key} /> 
-                    )}
-                    
-                </div>
-                <Share link={`https://wishlist-b5d9c.web.app/public/wishlist/${list.key}`}  />
             </div>
+            <div className='col-sm-2'></div>
         </div>
+        
     )
 }
 
@@ -74,5 +77,3 @@ export const Item = ({ paystack, item }) => {
         </div> 
     )
 }
-
-export default inject('store')(observer(WishList))

@@ -1,12 +1,16 @@
 import React from 'react'
-import { Wishlist } from './Wishlist';
-import { Activities } from './Activities';
+import Wishlist from './Wishlist';
+import Activities from './Activities';
 import './Home.css';
+import { inject } from 'mobx-react';
 
-export const Home = (props) => {
+const Home = (props) => {
+    // let { store } = props;
+    // console.log(store) 
     const handleChange = (e) => {
 
     }
+    
     return (
         <div className='row'> 
             <div className='col-sm-9'>
@@ -14,7 +18,6 @@ export const Home = (props) => {
             </div>
             <div className=' shadow col-sm-3 activities'>
                 <div className='content'>
-                    <input className='form-input' placeholder="Search" name="search" onChange={handleChange} />
                     <h4 style={{marginLeft:20}} >Activities</h4>
                     <Activities />
                 </div>
@@ -23,3 +26,5 @@ export const Home = (props) => {
         </div>
     )
 }
+
+export default inject('store')(Home);
