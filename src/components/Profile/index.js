@@ -5,6 +5,7 @@ import { onSnapshot } from 'mobx-state-tree';
 import { database, auth, storage } from '../../helpers/Firebase';
 import { Snack } from '../../helpers/Snack';
 import FileReaderInput from 'react-file-reader-input';
+import { Icon } from '../../helpers/Icon';
 
 const Profile = (props) => {
     let { store } = props;
@@ -101,6 +102,7 @@ const Profile = (props) => {
     return (
         <>
            <Nav title='Profile' />
+           <Icon />
             <div className='card'>
                 <div className='center'>
                     <FileReaderInput as="url" onChange={handleImageChange}>

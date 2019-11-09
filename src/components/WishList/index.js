@@ -7,6 +7,7 @@ import moment from 'moment';
 import { database } from '../../helpers/Firebase';
 import loadingGif from '../../assets/images/loading.gif';
 import { Share } from '../../helpers/Share';
+import { Icon } from '../../helpers/Icon';
 
 const WishList =  ( props ) => {
     const { store } = props;
@@ -35,6 +36,7 @@ const WishList =  ( props ) => {
     return (
         <div>
             <Nav title="Wishlist" />
+            <Icon />
             <div style={{marginLeft:40}}  className='card-header'>
                 <div style={{backgroundImage: `url(${list.profilePicture})`, height:30, width:30, borderRadius:15, backgroundSize: 'cover', marginTop:20}} ></div>
                 <div className='user-info'>

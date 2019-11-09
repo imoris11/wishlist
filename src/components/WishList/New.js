@@ -4,6 +4,7 @@ import { Item } from '../MyWishList'
 import { Nav } from '../Navigation';
 import { inject } from 'mobx-react';
 import { database, auth } from '../../helpers/Firebase';
+import { Icon } from '../../helpers/Icon';
 
  const NewList = (props) => {
      let { store } = props;
@@ -136,6 +137,7 @@ import { database, auth } from '../../helpers/Firebase';
     return (
         <>
             <Nav title='New Wishlist' />
+            <Icon />
             <div className='card'>
                     <div >
                                                                                                                                                                                                                                                                                                                                <h3  style={{textAlign:'center'}}>Make a Wish <FaGift className='primary icon' /> </h3>

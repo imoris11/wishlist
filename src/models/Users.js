@@ -10,6 +10,7 @@ export const User = types.model({
     created_at: 0,
     loading: true,
     noWishes:false,
+    showMenu:false,
     wishList: types.array(WishList, []),
     recentLists: types.array(WishList, [])
 }).views(self => ({
@@ -48,6 +49,9 @@ export const User = types.model({
         });
         self.wishList[index] = list
         
+    },
+    toggleShowMenu() {
+        self.showMenu = !self.showMenu
     },
     setWishLists(wishLists) {
        self.wishList = wishLists

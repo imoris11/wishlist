@@ -1,14 +1,14 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 import loadingGif from '../../assets/images/loading.gif';
 import { Share } from '../../helpers/Share';
+import { Icon } from '../../helpers/Icon';
+
 
 const Wishlist = (props) => {
     const { store } = props;
-
     if (store.loading) 
         return (
             <div className='text-center'>
@@ -27,6 +27,7 @@ const Wishlist = (props) => {
 
     return (
         <div >
+            <Icon />
             <h4 style={{marginLeft:20}}>Recent Wishlists</h4>
             {store.recentLists.map((list) =>
                 <List list={list} key={list.key} />
@@ -37,26 +38,8 @@ const Wishlist = (props) => {
 }
 
 const List = ({ list }) => {
-    const shareList = ()=> {
-        
-    }
     return (
-<div>
 			<div>
-				{toggle && (
-					<div className="absolute">
-						<Menu />
-						<div className="sidebar-control" onClick={handleIconClick}>
-							<div className="sidebar-control-icon">&#9747;</div>
-						</div>
-					</div>
-				)}
-				{!toggle && (
-					<div className="sidebar-control" onClick={handleIconClick}>
-						<div className="sidebar-control-icon">&#9776;</div>
-					</div>
-				)}
-
         <div className='card'>
             <div className='card-header'>
                 <div style={{backgroundImage: `url(${list.profilePicture})`, height:30, width:30, borderRadius:15, backgroundSize: 'cover', marginTop:20}} ></div>
