@@ -4,6 +4,7 @@ import moment from 'moment';
 import { database } from '../../helpers/Firebase';
 import loadingGif from '../../assets/images/loading.gif';
 import { Share } from '../../helpers/Share';
+import { Link } from 'react-router-dom';
 
 export const PublicList =  ( props ) => {
     const { store } = props;
@@ -14,6 +15,8 @@ export const PublicList =  ( props ) => {
         database.ref().child('wishlists').child(key).once('value', snapshot => {
             if (snapshot.exists()) {
                 setList({...snapshot.val(), key: snapshot.key });
+                setLoading(false);
+            }else{
                 setLoading(false);
             }
         });
@@ -28,6 +31,14 @@ export const PublicList =  ( props ) => {
                 <img src={loadingGif} alt="Loading icon" />
             </div>
         )
+    if (!loading && list.items.length === 0 )
+        return (
+            <div className='text-center'>
+                <h3>Wish list no longer exists :(</h3>
+                <Link to='/home'> Go Home </Link>
+            </div>
+        )
+       
 
     return (
         <div >

@@ -10,7 +10,6 @@ import { Share } from '../../helpers/Share';
 import { Icon } from '../../helpers/Icon';
 
 const WishList =  ( props ) => {
-    const { store } = props;
     const [list, setList] = useState({items:[]});
     const [ loading, setLoading ] = useState(true);
     const key = props.match.params.id;
@@ -18,6 +17,8 @@ const WishList =  ( props ) => {
         database.ref().child('wishlists').child(key).once('value', snapshot => {
             if (snapshot.exists()) {
                 setList({...snapshot.val(), key: snapshot.key });
+                setLoading(false);
+            }else{
                 setLoading(false);
             }
         });
@@ -32,6 +33,13 @@ const WishList =  ( props ) => {
                 <img src={loadingGif} alt="Loading icon" />
             </div>
         )
+    if (!loading && list.items.length === 0 )
+    return (
+        <div className='text-center'>
+            <h3>Wish list no longer exists :(</h3>
+            <Link to='/home'> Go Home </Link>
+        </div>
+    )
 
     return (
         <div>

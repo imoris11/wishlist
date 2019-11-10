@@ -9,6 +9,7 @@ import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';import
 import Sidebar from './components/Sidebar';
 import Profile from './components/Profile';
 import { PublicList } from './components/Public';
+import { Twitter } from './Twitter';
 
 function App(props) {
       return (
@@ -17,6 +18,7 @@ function App(props) {
             <Route exact path='/' component={Login} />
             <Route exact path='/signup' component={Signup} />
             <Route exact path='/reset' component={Reset} />
+            <Route exact path='/twitter' component={Twitter} />
             <Route exact path='/public/wishlist/:id' component={PublicList} />
             <Sidebar>
               <Route exact path='/home' component={Home} />

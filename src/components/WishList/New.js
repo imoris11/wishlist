@@ -48,7 +48,28 @@ import { Icon } from '../../helpers/Icon';
             data['key'] = key;
             store.addWishlist(data);
             addActivity(user, `created a new wishlist, ${state.title}`, key);
+            //send tweet
+            sendTweet(data)
         }
+
+    }
+
+    const sendTweet = (wishlist) => {
+        const data = {
+            message: `${wishlist.displayName} created a new wishlist, ${wishlist.title}. See wishlist here: https://wishlist-b5d9c.web.app/public/wishlist/${wishlist.key}`
+        }
+          fetch('https://mywishlistbot.herokuapp.com/api/v1/status',
+          {
+              method: 'POST',
+              body: JSON.stringify(data),
+              headers: {
+                  'Content-Type': 'application/json'
+              }
+          }).then(res => res.json()).then(result => {
+              console.log(result);
+          }).catch(error => {
+              console.log(error);
+          })
     }
 
     const addActivity = (user, message, key ) => {
