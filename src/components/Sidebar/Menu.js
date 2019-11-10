@@ -17,7 +17,7 @@ import { observer, inject } from 'mobx-react';
                     store.setWishLists(wishLists);
                 })
             }else {
-                store.setNoWishes();
+                //store.setNoWishes();
             }
         });
     }

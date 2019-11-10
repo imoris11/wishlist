@@ -48,7 +48,7 @@ const WishList =  ( props ) => {
                 <div >
                     <h5> {list.title} </h5>
                     {list.items.map((item) =>
-                        <Item paystack={store.paystack} item={item} key={list.key} /> 
+                        <Item paystack={list.paystack} item={item} key={list.key} /> 
                     )}
                     
                 </div>

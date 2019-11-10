@@ -29,7 +29,7 @@ const Profile = (props) => {
     const submitGeneral = (e) => {
         e.preventDefault();
         setLoading(true);
-        if ( state.profilePicture ) {
+        if ( state.profilePicture !== store.photoURL ) {
             uploadProfilePicture(state.profilePicture);
         }else{
             updateUserProfile(store.photoURL);

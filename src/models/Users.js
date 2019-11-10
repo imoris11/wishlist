@@ -37,8 +37,8 @@ export const User = types.model({
         self.paystack = link
     },
     addWishlist(list){
-        self.wishList.push(list)
-        self.recentLists.push(list)
+        self.wishList.unshift(list)
+        self.recentLists.unshift(list)
     },
     updateWishlist(key, list) {
         let index = 0;
@@ -61,6 +61,7 @@ export const User = types.model({
     },
     setRecentLists(lists) {
         self.recentLists = lists
+        self.loading = false
     },
     setNoWishes() {
         self.loading = false

@@ -31,6 +31,7 @@ import { Icon } from '../../helpers/Icon';
         const user = auth.currentUser
         const data = {
             title:state.title,
+            paystack: store.paystack,
             uid: user.uid,
             items:items,
             displayName: user.displayName,

@@ -14,6 +14,7 @@ export const WishList = types.model({
     displayName: types.string,
     profilePicture: types.string,
     uid: types.string,
+    paystack:'',
     createdAt: types.integer
 }).views(self => ({
     numberOfItems () {
